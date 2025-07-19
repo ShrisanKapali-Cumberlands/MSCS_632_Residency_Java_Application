@@ -6,7 +6,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class TodoListManager {
-
+    // Thread-safe collections to store users and tasks
+    // Using ConcurrentHashMap for thread-safe operations
+    // AtomicInteger for generating unique task IDs
     private final Map<String, User> users = new ConcurrentHashMap<>();
     private final Map<Integer, Task> tasks = new ConcurrentHashMap<>();
     private final AtomicInteger taskIdCounter = new AtomicInteger(0);
@@ -20,16 +22,19 @@ public class TodoListManager {
         return users.computeIfAbsent(username, User::new);
     }
 
+    // Check if a user exists
+    // This method is used to verify user existence before adding tasks
     public boolean userExists(String username) {
         return users.containsKey(username);
     }
 
+    // Gets all users
+    // This method returns a collection of all users in the system
     public Collection<User> getUsers() {
         return users.values();
     }
 
-
-    // --- Task Management ---
+    // --- Add Task ---
     public Task addTask(String description, String category, String username) {
         User user = users.get(username);
         if (user == null) {
@@ -41,11 +46,14 @@ public class TodoListManager {
         return task;
     }
 
+    // REmove Task
     public boolean removeTask(int taskId) {
         // The remove operation on ConcurrentHashMap is atomic
         return tasks.remove(taskId) != null;
     }
 
+    // Mark Task as Complete
+    // This method marks a task as completed if it is currently pending
     public boolean markTaskAsComplete(int taskId) {
         Task task = tasks.get(taskId);
         if (task != null) {
@@ -59,10 +67,12 @@ public class TodoListManager {
         return false;
     }
 
+    // GEt All Tasks
     public List<Task> getAllTasks() {
         return List.copyOf(tasks.values());
     }
 
+    // Get Tasks by User
     public List<Task> getTasksByUser(String username) {
         return tasks.values().stream()
                 .filter(task -> task.getAssignedTo().getUsername().equals(username))

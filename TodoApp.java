@@ -24,11 +24,17 @@ public class TodoApp {
 
     // --- User Menu and Actions ---
     private static void showUserMenu() {
-        System.out.println("\n--- User Menu ---");
-        System.out.println("1. Select User");
-        System.out.println("2. Create New User");
-        System.out.println("3. Exit");
-        System.out.print("Enter your choice: ");
+        System.out.println("\n+------------------------------------------+");
+        System.out.println("|                USER MENU                 |");
+        System.out.println("+------------------------------------------+");
+        System.out.format("| %-40s |%n", " "); // Blank line
+        System.out.format("| %-40s |%n", "   [1] Select Existing User");
+        System.out.format("| %-40s |%n", "   [2] Create New User");
+        System.out.format("| %-40s |%n", " "); // Blank line
+        System.out.format("| %-40s |%n", "   [3] Exit Application");
+        System.out.format("| %-40s |%n", " "); // Blank line
+        System.out.println("+------------------------------------------+");
+        System.out.print("> Enter your choice: ");
 
         int choice = readIntInput();
 
@@ -120,14 +126,20 @@ public class TodoApp {
 
     // --- Task Menu and Actions ---
     private static void showTaskMenu() {
-        System.out.println("\n--- Task Menu (User: " + currentUser.getUsername() + ") ---");
-        System.out.println("1. Add Task");
-        System.out.println("2. Remove Task");
-        System.out.println("3. Mark Task as Complete");
-        System.out.println("4. View My Tasks");
-        System.out.println("5. View All Tasks");
-        System.out.println("6. Switch User (Log Out)");
-        System.out.print("Enter your choice: ");
+        String title = String.format("TASK MENU | User: %s", currentUser.getUsername());
+        System.out.println("\n+------------------------------------------+");
+        System.out.format("| %-40s |%n", centerText(title, 40));
+        System.out.println("+------------------------------------------+");
+        System.out.format("| %-40s |%n", "   [1] Add Task");
+        System.out.format("| %-40s |%n", "   [2] Remove Task");
+        System.out.format("| %-40s |%n", "   [3] Mark Task as Complete");
+        System.out.format("| %-40s |%n", " ");
+        System.out.format("| %-40s |%n", "   [4] View My Tasks");
+        System.out.format("| %-40s |%n", "   [5] View All Tasks");
+        System.out.format("| %-40s |%n", " ");
+        System.out.format("| %-40s |%n", "   [6] Switch User (Log Out)");
+        System.out.println("+------------------------------------------+");
+        System.out.print("> Enter your choice: ");
 
         int choice = readIntInput();
 
@@ -228,5 +240,15 @@ public class TodoApp {
         }
         System.out.format(
                 "+------+--------------------------------+-----------------+--------------+-----------------+%n");
+    }
+
+    private static String centerText(String text, int width) {
+        if (text.length() >= width) {
+            return text;
+        }
+        int padding = width - text.length();
+        int leftPadding = padding / 2;
+        int rightPadding = padding - leftPadding;
+        return " ".repeat(leftPadding) + text + " ".repeat(rightPadding);
     }
 }

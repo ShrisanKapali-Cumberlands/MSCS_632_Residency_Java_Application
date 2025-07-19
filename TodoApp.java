@@ -38,6 +38,7 @@ public class TodoApp {
 
         int choice = readIntInput();
 
+        // Switch case to handle user menu choices
         switch (choice) {
             case 1:
                 selectUser();
@@ -94,9 +95,13 @@ public class TodoApp {
     private static void selectUser() {
         System.out.println("\n--- Available Users ---");
         if (manager.getUsers().isEmpty()) {
-            System.out.println("No users exist. Please create one first.");
+            System.out.println("\n+------------------------------------------+");
+            System.out.println("|  [!] No users exist in the system.     |");
+            System.out.println("|      Please create a user first.       |");
+            System.out.println("+------------------------------------------+");
             return;
         }
+
         manager.getUsers().forEach(user -> System.out.println("- " + user.getUsername()));
         System.out.print("Enter username to select: ");
         String username = scanner.nextLine();

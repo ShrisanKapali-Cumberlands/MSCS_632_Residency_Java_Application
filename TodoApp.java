@@ -170,8 +170,23 @@ public class TodoApp {
     private static void printTasks(List<Task> tasks) {
         if (tasks.isEmpty()) {
             System.out.println("No tasks found.");
-        } else {
-            tasks.forEach(System.out::println);
+            return;
         }
+        String format = "| %-4s | %-30s | %-15s | %-12s | %-15s |%n";
+        System.out.format(
+                "+------+--------------------------------+-----------------+--------------+-----------------+%n");
+        System.out.format(format, "ID", "Description", "Category", "Status", "Assigned To");
+        System.out.format(
+                "+------+--------------------------------+-----------------+--------------+-----------------+%n");
+        for (Task task : tasks) {
+            System.out.format(format,
+                    task.getTaskId(),
+                    task.getDescription(),
+                    task.getCategory(),
+                    task.getStatus(),
+                    task.getAssignedTo().getUsername());
+        }
+        System.out.format(
+                "+------+--------------------------------+-----------------+--------------+-----------------+%n");
     }
 }

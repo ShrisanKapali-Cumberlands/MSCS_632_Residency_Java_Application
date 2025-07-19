@@ -8,6 +8,9 @@ public class TodoApp {
     private static User currentUser = null; // Manages the currently "logged-in" user
 
     public static void main(String[] args) {
+        showWelcomeScreen();
+        showLoader();
+
         while (true) {
             // If no user is selected, show the user management menu
             if (currentUser == null) {
@@ -37,12 +40,49 @@ public class TodoApp {
                 createUser();
                 break;
             case 3:
-                System.out.println("Exiting application. Goodbye!");
+                showGoodbyeScreen();
                 scanner.close();
                 System.exit(0);
             default:
                 System.out.println("Invalid choice. Please try again.");
         }
+    }
+
+    // --- Welcome Screen ---
+    private static void showWelcomeScreen() {
+        System.out.println("\n" +
+                "==========================================================\n" +
+                "|                                                        |\n" +
+                "|          Welcome to the Interactive To-Do List!        |\n" +
+                "|                                                        |\n" +
+                "==========================================================\n");
+    }
+
+    // Showing the loader animation
+    private static void showLoader() {
+        System.out.print("Initializing Application... ");
+        char[] animationChars = new char[] { '|', '/', '-', '\\' };
+        try {
+            for (int i = 0; i < 20; i++) {
+                System.out.print(animationChars[i % 4] + "\b"); // \b is a backspace
+                Thread.sleep(100); // Pause for 100 milliseconds
+            }
+            System.out.println("Done!");
+            Thread.sleep(500); // A brief pause after loading
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    // --- Goodbye Screen ---
+    private static void showGoodbyeScreen() {
+        System.out.println("\n" +
+                "==========================================================\n" +
+                "|                                                        |\n" +
+                "|      Thank you for using the To-Do List application!   |\n" +
+                "|                      Goodbye!                          |\n" +
+                "|                                                        |\n" +
+                "==========================================================\n");
     }
 
     private static void selectUser() {

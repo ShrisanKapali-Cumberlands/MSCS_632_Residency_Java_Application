@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TodoApp {
-
+    // Static variables for managing the application state
     private static final TodoListManager manager = new TodoListManager();
     private static final Scanner scanner = new Scanner(System.in);
     private static User currentUser = null; // Manages the currently "logged-in" user
@@ -92,6 +92,7 @@ public class TodoApp {
                 "==========================================================\n");
     }
 
+    // --- User Selection and Creation ---
     private static void selectUser() {
         System.out.println("\n--- Available Users ---");
         if (manager.getUsers().isEmpty()) {
@@ -113,6 +114,7 @@ public class TodoApp {
         }
     }
 
+    // Method to create a new user
     private static void createUser() {
         System.out.print("Enter new username: ");
         String username = scanner.nextLine();
@@ -173,6 +175,7 @@ public class TodoApp {
         }
     }
 
+    // --- Add Task ---
     private static void addTask() {
         System.out.print("Enter task description: ");
         String description = scanner.nextLine();
@@ -183,6 +186,7 @@ public class TodoApp {
         System.out.println("SUCCESS: Task '" + newTask.getDescription() + "' added with ID: " + newTask.getTaskId());
     }
 
+    // Remove Task
     private static void removeTask() {
         System.out.print("Enter the Task ID to remove: ");
         int taskId = readIntInput();
@@ -193,6 +197,7 @@ public class TodoApp {
         }
     }
 
+    // Mark Task as Complete
     private static void markTaskAsComplete() {
         System.out.print("Enter the Task ID to mark as complete: ");
         int taskId = readIntInput();
@@ -203,12 +208,14 @@ public class TodoApp {
         }
     }
 
+    // View All Tasks
     private static void viewAllTasks() {
         System.out.println("\n--- All Tasks ---");
         List<Task> tasks = manager.getAllTasks();
         printTasks(tasks);
     }
 
+    // View Tasks by User
     private static void viewTasksByUser(String username) {
         System.out.println("\n--- Tasks for " + username + " ---");
         List<Task> tasks = manager.getTasksByUser(username);
@@ -224,6 +231,7 @@ public class TodoApp {
         }
     }
 
+    // Print Tasks
     private static void printTasks(List<Task> tasks) {
         if (tasks.isEmpty()) {
             System.out.println("No tasks found.");
@@ -247,6 +255,7 @@ public class TodoApp {
                 "+------+--------------------------------+-----------------+--------------+-----------------+%n");
     }
 
+    // Helper method to center text within a given width
     private static String centerText(String text, int width) {
         if (text.length() >= width) {
             return text;
